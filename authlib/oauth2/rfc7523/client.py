@@ -32,7 +32,7 @@ class JWTBearerClientAssertion:
         if token_url is not None:  # pragma: no cover
             deprecate(
                 "'token_url' is deprecated. Override 'get_audiences' instead.",
-                version="1.8",
+                version="1.8.0",
             )
         self.token_url = token_url
         self._validate_jti = validate_jti
@@ -59,7 +59,7 @@ class JWTBearerClientAssertion:
                 key = import_any_key(self.resolve_client_public_key(client, headers))
                 deprecate(
                     "resolve_client_public_key takes only 'client' parameter.",
-                    version="1.8",
+                    version="1.8.0",
                 )
 
             request.client = client

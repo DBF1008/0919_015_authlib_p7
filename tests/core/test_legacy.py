@@ -1,8 +1,16 @@
 from joserfc.jwk import KeySet
 from joserfc.jwk import OctKey
 
+from authlib._joserfc_helpers import _is_authlib_key
 from authlib._joserfc_helpers import import_any_key
 from authlib.jose import OctKey as AuthlibOctKey
+
+
+def test_is_authlib_key():
+    key = AuthlibOctKey.generate_key()
+    assert _is_authlib_key(key)
+    assert not _is_authlib_key("foo")
+    assert not _is_authlib_key({"kty": "oct"})
 
 
 def test_import_legacy_oct_key():

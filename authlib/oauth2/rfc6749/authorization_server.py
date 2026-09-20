@@ -371,7 +371,7 @@ class AuthorizationServer(Hookable):
             request = self.create_oauth2_request(request)
 
         if not grant:
-            deprecate("The 'grant' parameter will become mandatory.", version="1.8")
+            deprecate("The 'grant' parameter will become mandatory.", version="1.8.0")
             try:
                 grant = self.get_authorization_grant(request)
             except UnsupportedResponseTypeError as error:

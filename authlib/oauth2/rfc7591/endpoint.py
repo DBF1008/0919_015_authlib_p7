@@ -104,7 +104,7 @@ class ClientRegistrationEndpoint:
             deprecate(
                 "generate_client_id takes a 'request' parameter. "
                 "It will become mandatory in coming releases",
-                version="1.8",
+                version="1.8.0",
             )
 
         try:
@@ -114,7 +114,7 @@ class ClientRegistrationEndpoint:
             deprecate(
                 "generate_client_secret takes a 'request' parameter. "
                 "It will become mandatory in coming releases",
-                version="1.8",
+                version="1.8.0",
             )
 
         client_id_issued_at = int(time.time())

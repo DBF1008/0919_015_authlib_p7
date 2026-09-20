@@ -61,7 +61,7 @@ class JWTBearerGrant(BaseGrant, TokenEndpointMixin):
             deprecate(
                 "'get_audiences' must return a non-empty list. "
                 "Audience validation will become mandatory.",
-                version="1.8",
+                version="1.8.0",
             )
 
         claims_requests = jwt.JWTClaimsRegistry(leeway=self.LEEWAY, **options)
@@ -88,7 +88,7 @@ class JWTBearerGrant(BaseGrant, TokenEndpointMixin):
             key = import_any_key(self.resolve_client_key(client, headers, claims))
             deprecate(
                 "Use resolve_client_public_key instead of resolve_client_key.",
-                version="1.8",
+                version="1.8.0",
             )
         else:
             key = import_any_key(self.resolve_client_public_key(client))

@@ -78,7 +78,7 @@ class OAuth2Request(OAuth2Payload):
             deprecate(
                 "'body' parameter in OAuth2Request is deprecated. "
                 "Use the payload system instead.",
-                version="1.8",
+                version="1.8.0",
             )
         self._body = body
 
@@ -106,7 +106,7 @@ class OAuth2Request(OAuth2Payload):
     def data(self):
         deprecate(
             "'request.data' is deprecated in favor of 'request.payload.data'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.data
 
@@ -114,7 +114,7 @@ class OAuth2Request(OAuth2Payload):
     def datalist(self) -> defaultdict[str, list]:
         deprecate(
             "'request.datalist' is deprecated in favor of 'request.payload.datalist'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.datalist
 
@@ -122,7 +122,7 @@ class OAuth2Request(OAuth2Payload):
     def client_id(self) -> str:
         deprecate(
             "'request.client_id' is deprecated in favor of 'request.payload.client_id'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.client_id
 
@@ -130,7 +130,7 @@ class OAuth2Request(OAuth2Payload):
     def response_type(self) -> str:
         deprecate(
             "'request.response_type' is deprecated in favor of 'request.payload.response_type'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.response_type
 
@@ -138,7 +138,7 @@ class OAuth2Request(OAuth2Payload):
     def grant_type(self) -> str:
         deprecate(
             "'request.grant_type' is deprecated in favor of 'request.payload.grant_type'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.grant_type
 
@@ -146,7 +146,7 @@ class OAuth2Request(OAuth2Payload):
     def redirect_uri(self):
         deprecate(
             "'request.redirect_uri' is deprecated in favor of 'request.payload.redirect_uri'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.redirect_uri
 
@@ -164,7 +164,7 @@ class OAuth2Request(OAuth2Payload):
     def state(self):
         deprecate(
             "'request.state' is deprecated in favor of 'request.payload.state'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.state
 
@@ -172,7 +172,7 @@ class OAuth2Request(OAuth2Payload):
     def body(self):
         deprecate(
             "'request.body' is deprecated. Use the payload system instead.",
-            version="1.8",
+            version="1.8.0",
         )
         return self._body
 
@@ -194,6 +194,6 @@ class JsonRequest:
     def data(self):
         deprecate(
             "'request.data' is deprecated in favor of 'request.payload.data'",
-            version="1.8",
+            version="1.8.0",
         )
         return self.payload.data

@@ -8,6 +8,7 @@ from authlib.jose import KeySet
 from authlib.jose import OctKey
 from authlib.jose import OKPKey
 from authlib.jose import RSAKey
+from authlib.jose.rfc7517 import load_pem_key
 from tests.util import read_file_path
 
 
@@ -253,6 +254,44 @@ def test_jwk_import_keys():
     key = JsonWebKey.import_key(raw=rsa_pub_pem)
     assert "e" in dict(key)
     assert "n" in dict(key)
+
+
+def test_jwk_find_key_cls():
+    rsa_key = RSAKey.generate_key(is_private=True)
+    ec_key = ECKey.generate_key("P-256", is_private=True)
+    okp_key = OKPKey.generate_key("Ed25519", is_private=True)
+
+    assert JsonWebKey.find_key_cls(rsa_key.as_key(is_private=True)) is RSAKey
+    assert JsonWebKey.find_key_cls(ec_key.as_key(is_private=True)) is ECKey
+    assert JsonWebKey.find_key_cls(okp_key.as_key(is_private=True)) is OKPKey
+    assert JsonWebKey.find_key_cls(b"secret") is OctKey
+    assert JsonWebKey.find_key_cls(object()) is None
+
+
+def test_jwk_import_encrypted_pem():
+    key = RSAKey.generate_key(is_private=True)
+    encrypted_pem = key.as_pem(is_private=True, password="secret")
+
+    # encrypted key without password raises a clear error
+    with pytest.raises(ValueError, match="Password is required"):
+        JsonWebKey.import_key(encrypted_pem)
+
+    # encrypted key with password imports fine
+    imported = JsonWebKey.import_key(encrypted_pem, {"password": "secret"})
+    assert imported["kty"] == "RSA"
+
+    # wrong password is not recovered silently
+    with pytest.raises(ValueError):
+        JsonWebKey.import_key(encrypted_pem, {"password": "wrong"})
+
+
+def test_load_pem_key_password_recovery():
+    key = RSAKey.generate_key(is_private=True)
+    plain_pem = key.as_pem(is_private=True)
+
+    # a password given for an unencrypted key is ignored
+    loaded = load_pem_key(plain_pem, password="secret")
+    assert JsonWebKey.find_key_cls(loaded) is RSAKey
 
 
 def test_jwk_import_key_set():
