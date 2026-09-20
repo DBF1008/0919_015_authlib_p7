@@ -1,4 +1,5 @@
 from authlib.common.urls import add_params_to_uri
+from authlib.deprecate import NEXT_MINOR_VERSION
 from authlib.deprecate import deprecate
 from authlib.oauth2.rfc6749.grants import BaseGrant
 
@@ -8,7 +9,7 @@ class IssuerParameter:
         if isinstance(authorization_server, BaseGrant):
             deprecate(
                 "IssueParameter should be used as an authorization server extension with 'authorization_server.register_extension(IssueParameter())'.",
-                version="1.8",
+                version=NEXT_MINOR_VERSION,
             )
             authorization_server.register_hook(
                 "after_authorization_response",

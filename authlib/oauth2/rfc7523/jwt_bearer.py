@@ -8,6 +8,7 @@ from joserfc.util import to_bytes
 
 from authlib._joserfc_helpers import import_any_key
 from authlib.common.encoding import json_loads
+from authlib.deprecate import NEXT_MINOR_VERSION
 from authlib.deprecate import deprecate
 
 from ..rfc6749 import BaseGrant
@@ -61,7 +62,7 @@ class JWTBearerGrant(BaseGrant, TokenEndpointMixin):
             deprecate(
                 "'get_audiences' must return a non-empty list. "
                 "Audience validation will become mandatory.",
-                version="1.8",
+                version=NEXT_MINOR_VERSION,
             )
 
         claims_requests = jwt.JWTClaimsRegistry(leeway=self.LEEWAY, **options)
@@ -88,7 +89,7 @@ class JWTBearerGrant(BaseGrant, TokenEndpointMixin):
             key = import_any_key(self.resolve_client_key(client, headers, claims))
             deprecate(
                 "Use resolve_client_public_key instead of resolve_client_key.",
-                version="1.8",
+                version=NEXT_MINOR_VERSION,
             )
         else:
             key = import_any_key(self.resolve_client_public_key(client))

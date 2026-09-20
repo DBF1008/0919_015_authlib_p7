@@ -80,7 +80,7 @@ class LegacyMixin:
         # compatible code
         if "aud" not in claims and hasattr(self, "get_audiences"):
             warnings.warn(
-                "get_audiences(self, request) is deprecated and will be removed in version 1.8. "
+                "get_audiences(self, request) is deprecated and will be removed in version 1.8.0. "
                 "You can set the ``aud`` value in get_client_claims instead.",
                 DeprecationWarning,
                 stacklevel=2,
@@ -95,7 +95,7 @@ class LegacyMixin:
             return {}
 
         warnings.warn(
-            "get_jwt_config(self, grant) is deprecated and will be removed in version 1.8. "
+            "get_jwt_config(self, grant) is deprecated and will be removed in version 1.8.0. "
             "Use resolve_client_private_key, get_client_claims, get_client_algorithm instead.",
             DeprecationWarning,
             stacklevel=2,

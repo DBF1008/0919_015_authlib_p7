@@ -5,6 +5,7 @@ JOSE implementation in Authlib. Tracking the status of JOSE specs at
 https://tools.ietf.org/wg/jose/
 """
 
+from authlib.deprecate import JOSE_REMOVAL_VERSION
 from authlib.deprecate import deprecate
 
 from .errors import JoseError
@@ -32,7 +33,8 @@ from .rfc8037 import OKPKey
 from .rfc8037 import register_jws_rfc8037
 
 deprecate(
-    "authlib.jose module is deprecated, please use joserfc instead.", version="2.0.0"
+    "authlib.jose module is deprecated, please use joserfc instead.",
+    version=JOSE_REMOVAL_VERSION,
 )
 
 # register algorithms

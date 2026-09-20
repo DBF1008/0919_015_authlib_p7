@@ -8,6 +8,7 @@ from joserfc.errors import JoseError
 from authlib._joserfc_helpers import import_any_key
 from authlib.common.security import generate_token
 from authlib.consts import default_json_headers
+from authlib.deprecate import NEXT_MINOR_VERSION
 from authlib.deprecate import deprecate
 
 from ..rfc6749 import AccessDeniedError
@@ -104,7 +105,7 @@ class ClientRegistrationEndpoint:
             deprecate(
                 "generate_client_id takes a 'request' parameter. "
                 "It will become mandatory in coming releases",
-                version="1.8",
+                version=NEXT_MINOR_VERSION,
             )
 
         try:
@@ -114,7 +115,7 @@ class ClientRegistrationEndpoint:
             deprecate(
                 "generate_client_secret takes a 'request' parameter. "
                 "It will become mandatory in coming releases",
-                version="1.8",
+                version=NEXT_MINOR_VERSION,
             )
 
         client_id_issued_at = int(time.time())

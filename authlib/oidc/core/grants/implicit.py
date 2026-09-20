@@ -174,7 +174,7 @@ class OpenIDImplicitGrant(LegacyMixin, ImplicitGrant):
         if not hasattr(self, "get_jwt_config"):
             return {}
         warnings.warn(
-            "get_jwt_config(self, client) is deprecated and will be removed in version 1.8. "
+            "get_jwt_config(self, client) is deprecated and will be removed in version 1.8.0. "
             "Use resolve_client_private_key, get_client_claims, get_client_algorithm instead.",
             DeprecationWarning,
             stacklevel=2,

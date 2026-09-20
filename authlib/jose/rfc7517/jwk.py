@@ -24,24 +24,39 @@ class JsonWebKey:
     def import_key(cls, raw, options=None):
         """Import a Key from bytes, string, PEM or dict.
 
+        This is the single entry point for importing keys. Keys are
+        dispatched directly by ``kty`` when it is known; otherwise the
+        raw data is parsed once by ``load_pem_key`` and matched against
+        the registered key classes.
+
         :return: Key instance
         """
-        kty = None
+        kty = cls._resolve_kty(raw, options)
+        if kty is not None:
+            key_cls = cls.JWK_KEY_CLS[kty]
+            return key_cls.import_key(raw, options)
+
+        password = options.get("password") if options else None
+        raw_key = load_pem_key(raw, password=password)
+        key_cls = cls._match_key_cls(raw_key)
+        return key_cls.import_key(raw_key, options)
+
+    @classmethod
+    def _resolve_kty(cls, raw, options):
         if options is not None:
             kty = options.get("kty")
+            if kty is not None:
+                return kty
+        if isinstance(raw, dict):
+            return raw.get("kty")
+        return None
 
-        if kty is None and isinstance(raw, dict):
-            kty = raw.get("kty")
-
-        if kty is None:
-            raw_key = load_pem_key(raw)
-            for _kty in cls.JWK_KEY_CLS:
-                key_cls = cls.JWK_KEY_CLS[_kty]
-                if key_cls.validate_raw_key(raw_key):
-                    return key_cls.import_key(raw_key, options)
-
-        key_cls = cls.JWK_KEY_CLS[kty]
-        return key_cls.import_key(raw, options)
+    @classmethod
+    def _match_key_cls(cls, raw_key):
+        for key_cls in cls.JWK_KEY_CLS.values():
+            if key_cls.validate_raw_key(raw_key):
+                return key_cls
+        raise ValueError("Unsupported key type")
 
     @classmethod
     def import_key_set(cls, raw):

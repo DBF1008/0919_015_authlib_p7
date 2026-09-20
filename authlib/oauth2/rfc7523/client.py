@@ -10,6 +10,7 @@ from joserfc.util import to_bytes
 
 from authlib._joserfc_helpers import import_any_key
 from authlib.common.encoding import json_loads
+from authlib.deprecate import NEXT_MINOR_VERSION
 from authlib.deprecate import deprecate
 
 from ..rfc6749 import InvalidClientError
@@ -32,7 +33,7 @@ class JWTBearerClientAssertion:
         if token_url is not None:  # pragma: no cover
             deprecate(
                 "'token_url' is deprecated. Override 'get_audiences' instead.",
-                version="1.8",
+                version=NEXT_MINOR_VERSION,
             )
         self.token_url = token_url
         self._validate_jti = validate_jti
@@ -59,7 +60,7 @@ class JWTBearerClientAssertion:
                 key = import_any_key(self.resolve_client_public_key(client, headers))
                 deprecate(
                     "resolve_client_public_key takes only 'client' parameter.",
-                    version="1.8",
+                    version=NEXT_MINOR_VERSION,
                 )
 
             request.client = client
